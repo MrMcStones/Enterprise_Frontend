@@ -13,6 +13,19 @@ export default function Todos() {
     fetchTodos()
   }, [])
 
+  const toggleComplete = async (id: number, completed: boolean) => {
+    await fetch(`http://localhost:8080/api/todos/${id}`, {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ completed: !completed }),
+    })
+    setTodos(
+      todos.map((todo) =>
+        todo.id === id ? { ...todo, completed: !completed } : todo
+      )
+    )
+  }
+
   return (
     <div>
       <h1>Todo List</h1>
@@ -20,6 +33,9 @@ export default function Todos() {
         {todos.map((todo) => (
           <li key={todo.id}>
             {todo.title} {todo.completed ? "✅" : "❌"}
+            <button onClick={() => toggleComplete(todo.id, todo.completed)}>
+              {todo.completed ? "Undo" : "Complete"}
+            </button>
           </li>
         ))}
       </ul>
