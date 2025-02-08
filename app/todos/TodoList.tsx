@@ -1,5 +1,5 @@
 "use client"
-import { deleteTodo, updateTodo } from "@/lib/api"
+import { deleteTodo, updateTodo } from "../lib/api"
 
 export default function TodoList({
   todos,
@@ -24,7 +24,9 @@ export default function TodoList({
         <li key={todo.id} className="flex justify-between p-2 border-b">
           <span
             onClick={() => handleToggle(todo.id, todo.completed)}
-            className={todo.completed ? "line-through" : ""}
+            className={
+              todo.completed ? "line-through cursor-pointer" : "cursor-pointer"
+            }
           >
             {todo.title}
           </span>

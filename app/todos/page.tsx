@@ -1,7 +1,7 @@
 "use client"
 import { useEffect, useState } from "react"
-import { getTodos } from "@/lib/api"
-import TodoList from "./TodoList.tsx"
+import { getTodos } from "../lib/api"
+import TodoList from "./TodoList"
 
 export default function TodosPage() {
   const [todos, setTodos] = useState([])

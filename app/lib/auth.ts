@@ -7,9 +7,12 @@ export const login = async (username: string, password: string) => {
 
   if (!response.ok) throw new Error("Invalid login")
 
-  const token = await response.text()
+  const { token } = await response.json()
   localStorage.setItem("token", token)
 }
 
 export const getToken = () => localStorage.getItem("token")
-export const logout = () => localStorage.removeItem("token")
+
+export const logout = () => {
+  localStorage.removeItem("token")
+}
