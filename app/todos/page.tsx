@@ -1,18 +1,27 @@
 "use client"
 import { useEffect, useState } from "react"
-import { getTodos } from "../lib/api"
+import { getTodos } from "@/app/lib/api"
 import TodoList from "./TodoList"
+import { Todo } from "@/app/lib/api"
 
 export default function TodosPage() {
-  const [todos, setTodos] = useState([])
+  const [todos, setTodos] = useState<Todo[]>([])
 
   useEffect(() => {
-    getTodos().then(setTodos)
+    async function fetchTodos() {
+      try {
+        const data = await getTodos()
+        setTodos(data)
+      } catch (error) {
+        console.error("Failed to fetch todos", error)
+      }
+    }
+    fetchTodos()
   }, [])
 
   return (
     <div>
-      <h1 className="text-xl font-bold">Todo List</h1>
+      <h1 className="text-2xl font-bold mb-4">Todos</h1>
       <TodoList todos={todos} setTodos={setTodos} />
     </div>
   )

@@ -1,13 +1,12 @@
 "use client"
-import { deleteTodo, updateTodo } from "../lib/api"
+import { Todo, deleteTodo, updateTodo } from "@/app/lib/api"
 
-export default function TodoList({
-  todos,
-  setTodos,
-}: {
-  todos: any[]
-  setTodos: any
-}) {
+interface TodoListProps {
+  todos: Todo[]
+  setTodos: React.Dispatch<React.SetStateAction<Todo[]>>
+}
+
+export default function TodoList({ todos, setTodos }: TodoListProps) {
   const handleDelete = async (id: number) => {
     await deleteTodo(id)
     setTodos(todos.filter((todo) => todo.id !== id))
