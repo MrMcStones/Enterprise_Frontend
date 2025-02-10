@@ -5,22 +5,18 @@ export interface Todo {
 }
 
 export const getTodos = async (): Promise<Todo[]> => {
-  const token = localStorage.getItem("token")
   const response = await fetch("http://localhost:8080/api/todos", {
-    headers: { Authorization: `Bearer ${token}` },
+    credentials: "include", // Lägg till credentials
   })
   if (!response.ok) throw new Error("Failed to fetch todos")
   return response.json()
 }
 
 export const createTodo = async (title: string): Promise<Todo> => {
-  const token = localStorage.getItem("token")
   const response = await fetch("http://localhost:8080/api/todos", {
     method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify({ title, completed: false }),
   })
   if (!response.ok) throw new Error("Failed to create todo")
@@ -28,10 +24,9 @@ export const createTodo = async (title: string): Promise<Todo> => {
 }
 
 export const deleteTodo = async (id: number): Promise<void> => {
-  const token = localStorage.getItem("token")
   await fetch(`http://localhost:8080/api/todos/${id}`, {
     method: "DELETE",
-    headers: { Authorization: `Bearer ${token}` },
+    credentials: "include",
   })
 }
 
@@ -39,13 +34,10 @@ export const updateTodo = async (
   id: number,
   data: Partial<Todo>
 ): Promise<Todo> => {
-  const token = localStorage.getItem("token")
   const response = await fetch(`http://localhost:8080/api/todos/${id}`, {
     method: "PUT",
-    headers: {
-      "Content-Type": "application/json",
-      Authorization: `Bearer ${token}`,
-    },
+    headers: { "Content-Type": "application/json" },
+    credentials: "include",
     body: JSON.stringify(data),
   })
   if (!response.ok) throw new Error("Failed to update todo")
